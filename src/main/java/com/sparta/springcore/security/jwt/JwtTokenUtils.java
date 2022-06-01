@@ -31,6 +31,7 @@ public final class JwtTokenUtils {
                      // 토큰 만료 일시 = 현재 시간 + 토큰 유효기간)
                     .withClaim(CLAIM_EXPIRED_DATE, new Date(System.currentTimeMillis() + JWT_TOKEN_VALID_MILLI_SEC))
                     .sign(generateAlgorithm());
+            System.out.println("token = " + token);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
