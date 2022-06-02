@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Service
 public class UserService {
@@ -33,22 +34,27 @@ public class UserService {
         if (found.isPresent()) {
             throw new IllegalArgumentException("중복된 사용자 ID 가 존재합니다.");
         }
+        //- 닉네임은 `최소 3자 이상, 알파벳 대소문자(a~z, A~Z), 숫자(0~9)`로 구성하기
+        String pattern = "^[a-zA-Z0-9]*$";
+        if(requestDto.getUsername().length() < 3 && Pattern.matches(pattern, requestDto.getUsername()))
+            throw new IllegalArgumentException("닉네임은 3자리 이상 입력해주세요.");
         System.out.println("2");
 
-
-
-            System.out.println("여긴 오지?");
-        // 패스워드 암호화
-//        String password = passwordEncoder.encode(requestDto.getPassword());
         String password = requestDto.getPassword();
         System.out.println("password = " + password);
 
         // 회원 비밀 번호 확인
         String passwordCk = requestDto.getPasswordCk();
         System.out.println("passwordCk = " + passwordCk);
-        if(!password.equals(passwordCk)) {
+        if(!password.equals(passwordCk))
             throw new IllegalArgumentException("비밀번호가 같지 않습니다");
-        }
+
+        if(requestDto.getPassword().length() < 4 || requestDto.getPassword().contains(username))
+            throw new IllegalArgumentException("비밀번호 4자리 이상, 혹은 닉네임과 같은 값을 사용할 수 없습니다.");
+
+
+
+
         String email = requestDto.getEmail();
         System.out.println("email = " + email);
 

@@ -1,6 +1,5 @@
 package com.sparta.springcore.dto;
 
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -11,8 +10,8 @@ import lombok.Setter;
 
 public class MemoRequestDto {
 
+    private String username;
     private String title;
-    private String content;
-//    private String comments;
+    private String contents;
 
 }
